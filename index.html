@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>MC Command Central</title>
+  </head>
+  <body>
+    <p id='server-time'></p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io();
+        // send command
+        $('#submit-btn').click(function() {
+          socket.emit('command', $('#messageBox').val());
+          $('#messageBox').val('');
+        });
+      });
+    </script>
+
+    <input id="messageBox" autocomplete="off" type="text">
+    <button type="button" id="submit-btn">Execute Command</button>
+
+  </body>
+</html>
