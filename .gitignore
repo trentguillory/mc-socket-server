@@ -1,2 +1,12 @@
+banned-ips.json
+banned-players.json
+eula.txt
+logs
+minecraft_server.1.11.jar
 node_modules
+ops.json
+server.properties
+usercache.json
+whitelist.json
 npm-debug.log
+world

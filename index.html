@@ -14,11 +14,16 @@
           socket.emit('command', $('#messageBox').val());
           $('#messageBox').val('');
         });
+        // log output
+        var console = document.getElementById('console');
+        socket.on('log', function(data) {
+          console.innerHTML += data;
+        });
       });
     </script>
 
     <input id="messageBox" autocomplete="off" type="text">
     <button type="button" id="submit-btn">Execute Command</button>
-
+    <pre id="console"></pre>
   </body>
 </html>
