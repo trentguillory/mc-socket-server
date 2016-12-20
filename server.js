@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+
 // Server setup
 const express = require('express');
 const socketIO = require('socket.io');
@@ -23,7 +25,7 @@ var minecraftServerProcess = spawn('java', [
     '-Xmx512M',
     '-Xms256M',
     '-jar',
-    'minecraft_server.1.10.2.jar',
+    'minecraft_server.1.11.jar',
     'nogui'
 ]);
 minecraftServerProcess.stdout.setEncoding('utf-8');
@@ -39,6 +41,7 @@ minecraftServerProcess.stderr.on('data', log);
 // Handle connections
 io.on('connection', (socket) => {
   console.log('Client connected');
+  getLatestLog();
   socket.on('disconnect', () => console.log('Client disconnected'));
   socket.on('command', function(command) {
     console.log("command: " + command);
@@ -53,3 +56,15 @@ minecraftServerProcess.stdout.on('data', function(data) {
 minecraftServerProcess.stderr.on('data', function(data) {
   io.emit('log', data + '\n');
 });
+
+// Get latest logs for new connections
+function getLatestLog() {
+  fs.readFile('logs/latest.log', 'utf8', function(err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    var newString = data.replace('<', '[');
+    newString = newString.replace('>', ']');
+    io.emit('log', newString + '\n');
+  });
+}
