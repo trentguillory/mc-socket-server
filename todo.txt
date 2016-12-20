@@ -1,0 +1,7 @@
+TODO:
+
+- add sessions for safety
+- custom logging to track everything server says. For some reason that isn't
+  saved in the log file
+- plugin to change command prefix
+- allow users to login based on... something? And prefix the message with that
