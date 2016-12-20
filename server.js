@@ -11,7 +11,6 @@ const INDEX = path.join(__dirname, 'index.html');
 // Require child process
 var spawn = require('child_process').spawn;
 
-
 // create HTTP server
 const server = express()
   .use((req, res) => res.sendFile(INDEX))
@@ -21,10 +20,10 @@ const io = socketIO(server);
 
 // Start MC server manually
 var minecraftServerProcess = spawn('java', [
-    '-Xmx1024M',
-    '-Xms1024M',
+    '-Xmx512M',
+    '-Xms256M',
     '-jar',
-    'minecraft_server.1.11.jar',
+    'minecraft_server.1.10.2.jar',
     'nogui'
 ]);
 minecraftServerProcess.stdout.setEncoding('utf-8');
