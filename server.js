@@ -6,19 +6,26 @@ var fs = require('fs');
 const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'index.html');
+const CHAT = path.join(__dirname, 'chat.html');
 
 // Require child process
 var spawn = require('child_process').spawn;
 
-// create HTTP server
-const server = express()
-  .use((req, res) => res.sendFile(INDEX))
-  .listen(PORT, () => console.log('listening on ${ PORT }'));
+// create HTTP server, initialize to listen on 3000 for SocketIO
+var app = express();
+const chatServer = app.listen(PORT, () => {
+  console.log('listening on ${ PORT }')
+});
+const io = socketIO(chatServer);
 
-const io = socketIO(server);
+app.use('/chat', (req, res) => res.sendFile(CHAT));
+
+// app.get('/:id', (req, res) => {
+//   res.send('user ');
+// });
 
 // Start MC server manually
 var minecraftServerProcess = spawn('java', [

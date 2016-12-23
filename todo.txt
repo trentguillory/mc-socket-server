@@ -1,7 +1,9 @@
 TODO:
 
-- add sessions for safety
-- custom logging to track everything server says. For some reason that isn't
-  saved in the log file
+- add sessions for safety, allow users to login based on Mojang account.
+- custom logging to track everything server says. Need two versions. One for
+  the admin to see all server logs, and another for all users to see chat
 - plugin to change command prefix
-- allow users to login based on... something? And prefix the message with that
+
+ROUTES:
+- Login - takes username, password. Returns Session object. User info, access, token
