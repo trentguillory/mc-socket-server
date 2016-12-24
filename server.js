@@ -5,11 +5,8 @@ var fs = require('fs');
 // Server setup
 const express = require('express');
 const socketIO = require('socket.io');
-const path = require('path');
 const routes = require('./routes');
-
 const PORT = process.env.PORT || 3000;
-const CHAT = path.join(__dirname, 'chat.html');
 
 // Require child process
 var spawn = require('child_process').spawn;
@@ -21,8 +18,7 @@ const chatServer = app.listen(PORT, () => {
 });
 const io = socketIO(chatServer);
 
-app.use('/chat', (req, res) => res.sendFile(CHAT));
-
+// send all requests through routes
 app.use('/', routes);
 
 // Start MC server manually

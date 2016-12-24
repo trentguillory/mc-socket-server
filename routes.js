@@ -1,19 +1,24 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var request = require('request');
-var router = express.Router();
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const request = require('request');
+const router = express.Router();
+
+const CHAT = path.join(__dirname, 'chat.html');
 
 // Route for base address
 router.get('/', function(req, res) {
   res.send('hello world');
-})
+});
+
+router.get('/chat', function(req, res) {
+  res.sendFile(CHAT);
+});
 
 // Route for login
 router.post('/login', function(req, res) {
-  //res.send('welcome to log in ' + req.query.user + ' with password ' + req.query.pass);
-
   var url = 'https://authserver.mojang.com/authenticate';
   var postData = {
     "agent": {
@@ -30,7 +35,6 @@ router.post('/login', function(req, res) {
     json: true,
     url: url
   };
-  // Send request
   request(options, function(err, response, body) {
     console.log('requesting');
     if (err) {
