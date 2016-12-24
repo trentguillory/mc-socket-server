@@ -23,9 +23,7 @@ const io = socketIO(chatServer);
 
 app.use('/chat', (req, res) => res.sendFile(CHAT));
 
-// app.get('/:id', (req, res) => {
-//   res.send('user ');
-// });
+app.use('/', routes);
 
 // Start MC server manually
 var minecraftServerProcess = spawn('java', [
