@@ -42,7 +42,7 @@ minecraftServerProcess.stderr.on('data', log);
 // Handle connections
 io.on('connection', (socket) => {
   console.log('Client connected');
-  getLatestLog();
+  //getLatestLog();
   socket.on('disconnect', () => console.log('Client disconnected'));
   socket.on('command', function(command) {
     console.log("command: " + command);
@@ -66,6 +66,7 @@ function getLatestLog() {
     }
     var newString = data.replace('<', '[');
     newString = newString.replace('>', ']');
+    // emit shouldnt be used for updating a single person. Should make call to database and return.
     io.emit('log', newString + '\n');
   });
 }

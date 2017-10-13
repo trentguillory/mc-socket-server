@@ -5,19 +5,30 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
 const router = express.Router();
+var chatLoader = require('./chatloader');
 
-const CHAT = path.join(__dirname, 'chat.html');
+const CHAT = path.join(__dirname, '/web/chat.html');
+const LOGIN = path.join(__dirname, '/web/login.html');
 
 // Route for base address
 router.get('/', function(req, res) {
   res.send('hello world');
 });
 
+// CHAT
 router.get('/chat', function(req, res) {
   res.sendFile(CHAT);
+  var messages = new chatLoader.loadRecentChats();
+  console.log("IT WORKS");
+  console.log(messages);
 });
 
-// Route for login
+// LOGIN
+// load login page
+router.get('/login', function (req, res) {
+  res.sendFile(LOGIN);
+});
+// post query
 router.post('/login', function(req, res) {
   var url = 'https://authserver.mojang.com/authenticate';
   var postData = {
@@ -29,6 +40,7 @@ router.post('/login', function(req, res) {
     "password": req.query.pass,
     "requestUser": true
   };
+  console.log(req.query);
   var options = {
     method: 'post',
     body: postData,
